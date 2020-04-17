@@ -9,9 +9,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "Facebook",
-    "Birthday",
-    "scheduling"
+    "Express",
+    "Hackathon",
+    "Node"
   ],
   "author": "Francis Adeboye",
   "license": "MIT"
