@@ -38,6 +38,52 @@ class UserController{
 			res.status(200).json(error.message);
 		}
 	}
+
+	/**
+	* login page
+	*/
+	static loginPage(req, res){
+		try{
+			// return login page
+
+		}catch(error){
+
+			res.status(200).json(error.message);
+		}
+	}
+
+	/**
+	* login user
+	*/
+	static loginUser(req, res){
+		try{
+			// collect process data
+			passport.authenticate('local', {
+				successRedirect: '/',
+				failureRedirect: '/login',
+				failureFlash: true
+			})(req, res, next);
+
+		}catch(error){
+
+			res.status(200).json(error.message);
+		}
+	}
+
+	/**
+	* logout user
+	*/
+	static logout(req, res){
+		try{
+			// logout user
+			req.logout();
+			// req.flash('success', 'You are logged out')
+			res.redirect('/');
+		}catch(error){
+
+			res.status(200).json(error.message);
+		}
+	}
 }
 
 module.exports = UserController;

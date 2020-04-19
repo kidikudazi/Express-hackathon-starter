@@ -1,19 +1,23 @@
 const LocalStrategy = require('passport-local').Strategy;
 const con = require('../config/database.js');
+const User = require('../database/models').User;
 const bcrypt = require('bcryptjs');
 
 module.exports = function(passport){
 	// Local strategy
 	passport.use('local',new LocalStrategy({ 
 	// or whatever you want to use
-    usernameField: 'username',    // define the parameter in req.body that passport can use as username and password
+    usernameField: 'email',    // define the parameter in req.body that passport can use as username and password
     passwordField: 'password'
-  },function(username, password, done){
+  },function(email, password, done){
 		// Match username
 
 		// let validateUsername = "SELECT * FROM admin WHERE username ='"+username+"'";
-		
-		con.query(validateUsername, function(err, user){
+		User.findAll({
+			where:{
+				email:email
+			}
+		}).then((err, user)=>{
 			if(err) throw err;
 			if(!user)
 			{
@@ -34,6 +38,8 @@ module.exports = function(passport){
 					}
 				});
 			}
+		}).catch(e=>{
+			throw e;
 		});
 	}));
 
