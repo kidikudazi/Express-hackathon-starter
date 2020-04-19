@@ -79,6 +79,6 @@ const port = process.env.PORT || 5000;
 
 // start server
 app.listen(port, function(){
-	console.log('::::::::::::::::Express Hackathon Starter::::::::::::::::::::')
+	console.log('::::::::::::::::Express Hackathon Starter::::::::::::::::::::');
 	console.log(`Server started on port ${port}...`);
 });

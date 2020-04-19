@@ -31,7 +31,8 @@ class UserController{
 	*/
 	static async registerNewUser(req, res){
 		try{
-			// collect data
+			// collect and validate data
+
 		}catch(error){
 
 			res.status(200).json(error.message);
