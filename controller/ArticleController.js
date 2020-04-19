@@ -1,25 +1,25 @@
 /**
 |----------------------------------------------
-| User Controller
+| Article Controller
 |----------------------------------------------
-| Holds all User operations
+| Holds all Article operations
 |----------------------------------------------
 */
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const slug = require('slug');
 const callbacks = require('../function/index.js');
-const aws = require('../config/aws.js');
-// const upload = require('../middlewares/image_upload.js');
 
-class UserController{
+class ArticleController{
+	
 	/**
-	* Index page
+	* create article page
 	*/
-	static index(req, res){
+	static createArticlePage(req, res){
 		try{
 
-			res.send('Hello world!');
-			// res.render('index');
+			
+			// res.render('page');
 		}catch(error){
 
 			res.status(200).json(error.message);
@@ -27,9 +27,9 @@ class UserController{
 	}
 
 	/**
-	* register new user
+	* create new article
 	*/
-	static async registerNewUser(req, res){
+	static async createNewArticle(req, res){
 		try{
 			// collect and validate data
 
@@ -38,6 +38,7 @@ class UserController{
 			res.status(200).json(error.message);
 		}
 	}
+
 }
 
-module.exports = UserController;
+module.exports = ArticleController;
