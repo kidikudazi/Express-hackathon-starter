@@ -8,8 +8,9 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const callbacks = require('../function/index.js');
-const aws = require('../config/aws.js');
+// const aws = require('../config/aws.js');
 // const upload = require('../middlewares/image_upload.js');
+const User = require('../database/models').User;
 
 class UserController{
 	/**
@@ -32,6 +33,42 @@ class UserController{
 	static async registerNewUser(req, res){
 		try{
 			// collect and validate data
+			const name = req.body.name;
+			const email = req.body.email;
+			const username = req.body.username;
+			const password = req.body.password;
+			const confirm_password = req.body.confirm_password;
+
+			req.checkBody('name', 'The Name Field is required').notEmpty();
+			req.checkBody('email', 'The Email Field is required').notEmpty();
+			req.checkBody('email', 'The Email is not valid').isEmail();
+			req.checkBody('password', 'The Password Field is required').notEmpty();
+			req.checkBody('confirm_password', 'Passwords do not match').equals(req.body.password);
+
+			let errors = req.validationErrors();
+
+			if(errors){
+				res.render('register');
+			}else{
+
+				let newUser = {
+					name:name,
+					email:email,
+					password:bcrypt.hashSync(password, 10)
+				};
+
+				User.create(newUser)
+				.then(result=>{
+					if(result){
+						req.flash('success', 'You are now registered and can login');
+				 		res.redirect('login');
+					}
+				})
+				.catch(err=>{
+					console.log(err);
+					return;
+				});
+			}
 
 		}catch(error){
 
@@ -45,7 +82,7 @@ class UserController{
 	static loginPage(req, res){
 		try{
 			// return login page
-
+			// res.render('login');
 		}catch(error){
 
 			res.status(200).json(error.message);
@@ -77,7 +114,7 @@ class UserController{
 		try{
 			// logout user
 			req.logout();
-			// req.flash('success', 'You are logged out')
+			req.flash('success', 'You are logged out');
 			res.redirect('/');
 		}catch(error){
 
