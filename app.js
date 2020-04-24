@@ -1,10 +1,10 @@
 const express = require('express');
-// const request = require('request');
+const request = require('request');
 const bodyParser = require('body-parser');
-// const ejs = require('ejs');
+const ejs = require('ejs');
 const path = require('path');
-// const expressValidator = require('express-validator');
-// const flash = require('connect-flash');
+const expressValidator = require('express-validator');
+const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 
@@ -12,13 +12,13 @@ const passport = require('passport');
 const app = express();
 
 // load view engine
-// app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views'));
 
-// app.set('view engine', 'ejs');
+app.set('view engine', 'ejs');
 
 // bodyParser middleware
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}))
 
 // set public folder
 app.use(express.static(path.join(__dirname, 'public/')));
@@ -31,38 +31,38 @@ app.use(session({
 }));
 
 // Express Messages Middleware
-// app.use(require('connect-flash')());
-// app.use(function(req, res, next){
-// 	res.locals.messages = require('express-messages')(req, res);
-// 	next();
-// });
+app.use(require('connect-flash')());
+app.use(function(req, res, next){
+	res.locals.messages = require('express-messages')(req, res);
+	next();
+});
 
 
 // Express Validtor Middleware
-// app.use(expressValidator({
-// 	errorFormatter: function(param, msg, value){
-// 		var namespace = param.split('.')
-// 		, root = namespace.shift()
-// 		, formParam = root;
+app.use(expressValidator({
+	errorFormatter: function(param, msg, value){
+		var namespace = param.split('.')
+		, root = namespace.shift()
+		, formParam = root;
 
-// 		while(namespace.length){
-// 			formParam += '['+ namespace.shift() + ']';
-// 		}
-// 		return {
-// 			param : formParam,
-// 			msg : msg,
-// 			value : value
-// 		};
-// 	}
-// }));
+		while(namespace.length){
+			formParam += '['+ namespace.shift() + ']';
+		}
+		return {
+			param : formParam,
+			msg : msg,
+			value : value
+		};
+	}
+}));
 
 // passport config
-// require('./middlewares/passport')(passport);
+require('./middlewares/passport')(passport);
 
-// // Passport Middleware
-// app.use(passport.initialize());
+// Passport Middleware
+app.use(passport.initialize());
 
-// app.use(passport.session());
+app.use(passport.session());
 
 app.get('*', function(req, res, next){
 	res.locals.user = req.user || null;

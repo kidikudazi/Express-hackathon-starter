@@ -73,6 +73,51 @@ class ArticleController{
 		}
 	}
 
+	/**
+	* fetch all created articles
+	*/
+	static fetchArticles(req, res){
+		try{
+
+		}catch(error){
+			res.status(200).json(error.message);
+		}
+	}
+
+
+	/**
+	* edit created article
+	*/
+	static editCreatedArticle(req, res){
+		try{
+
+		}catch(error){
+			res.status(200).json(error.message);
+		}
+	}
+
+	/**
+	* update article details
+	*/
+	static updateArticleInfo(req, res){
+		try{
+
+		}catch(error){
+			res.status(200).json(error.message);
+		}
+	}
+
+	/**
+	* delete created article
+	*/
+	static deleteArticle(req, res){
+		try{
+
+		}catch(error){
+			res.status(200).json(error.message);
+		}
+	}
+
 }
 
 module.exports = ArticleController;

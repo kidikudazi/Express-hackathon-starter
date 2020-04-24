@@ -19,8 +19,11 @@ class UserController{
 	static index(req, res){
 		try{
 
-			res.send('Hello world!');
-			// res.render('index');
+			// res.send('Hello world!');
+			req.flash('success', 'Good one');
+			res.render('index', {
+				success:req.flash('success')
+			});
 		}catch(error){
 
 			res.status(200).json(error.message);
