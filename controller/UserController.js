@@ -30,6 +30,20 @@ class UserController{
 		}
 	}
 
+
+	/**
+	* register page
+	*/
+	static registerPage(req, res){
+		try{
+			res.render('register', {
+				title:'Sign-Up'
+			});
+		}catch(error){
+
+			res.status(200).json(error.message);
+		}
+	}
 	/**
 	* register new user
 	*/
@@ -85,7 +99,9 @@ class UserController{
 	static loginPage(req, res){
 		try{
 			// return login page
-			// res.render('login');
+			res.render('login', {
+				title:'Sign-In'
+			});
 		}catch(error){
 
 			res.status(200).json(error.message);

@@ -12,7 +12,10 @@ const isAuth = require('../middlewares/passportAuth');
 router.get('/', UserController.index);
 
 // return register page
-router.get('/register', UserController.registerNewUser);
+router.get('/register', UserController.registerPage);
+
+// register new user
+router.post('/register', UserController.registerNewUser);
 
 // return login page
 router.get('/login', UserController.loginPage);
