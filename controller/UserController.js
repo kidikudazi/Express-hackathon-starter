@@ -50,22 +50,23 @@ class UserController{
 	static async registerNewUser(req, res){
 		try{
 			// collect and validate data
-			const name = req.body.name;
+			const name = req.body.fullname;
 			const email = req.body.email;
-			const username = req.body.username;
 			const password = req.body.password;
 			const confirm_password = req.body.confirm_password;
 
-			req.checkBody('name', 'The Name Field is required').notEmpty();
+			req.checkBody('fullname', 'The Name Field is required').notEmpty();
 			req.checkBody('email', 'The Email Field is required').notEmpty();
 			req.checkBody('email', 'The Email is not valid').isEmail();
 			req.checkBody('password', 'The Password Field is required').notEmpty();
 			req.checkBody('confirm_password', 'Passwords do not match').equals(req.body.password);
 
 			let errors = req.validationErrors();
-
 			if(errors){
-				res.render('register');
+				res.render('register', {
+					title:'Sign-Up',
+					errors:errors
+				});
 			}else{
 
 				let newUser = {
@@ -78,7 +79,9 @@ class UserController{
 				.then(result=>{
 					if(result){
 						req.flash('success', 'You are now registered and can login');
-				 		res.redirect('login');
+				 		res.redirect('login', {
+				 			title:'Sign-In'
+				 		});
 					}
 				})
 				.catch(err=>{

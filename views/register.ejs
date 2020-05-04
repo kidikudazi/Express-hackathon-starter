@@ -12,7 +12,17 @@
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 				<h3 class="page-header">Sign-Up</h3>
-				<form>
+				<% if (locals.errors) { %>
+			        <% Object.values(errors).forEach(function(error){ %>
+			            <div class="alert alert-danger">
+							<button type="button" class="close" data-dismiss="alert">
+								&times;
+							</button>
+							<strong><%= error.msg %></strong>
+						</div>
+			        <% }); %>
+			    <% } %>
+				<form method="POST" action="/register">
 					<div class="form-group">
 						<div class="input-group">
 							<span class="input-group-addon">FullName</span>
