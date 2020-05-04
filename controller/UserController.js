@@ -70,7 +70,7 @@ class UserController{
 			}else{
 
 				let newUser = {
-					name:name,
+					fullname:name,
 					email:email,
 					password:bcrypt.hashSync(password, 10)
 				};
@@ -79,19 +79,17 @@ class UserController{
 				.then(result=>{
 					if(result){
 						req.flash('success', 'You are now registered and can login');
-				 		res.redirect('login', {
+				 		res.render('login', {
 				 			title:'Sign-In'
 				 		});
 					}
 				})
 				.catch(err=>{
-					console.log(err);
 					return;
 				});
 			}
 
 		}catch(error){
-
 			res.status(200).json(error.message);
 		}
 	}
