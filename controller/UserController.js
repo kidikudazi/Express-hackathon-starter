@@ -5,11 +5,9 @@
 | Holds all User operations
 |----------------------------------------------
 */
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const callbacks = require('../function/index.js');
-// const aws = require('../config/aws.js');
-// const upload = require('../middlewares/image_upload.js');
+const passport = require('passport');
+
 const User = require('../database/models').User;
 
 class UserController{
@@ -18,11 +16,8 @@ class UserController{
 	*/
 	static index(req, res){
 		try{
-
-			// res.send('Hello world!');
-			req.flash('success', 'Good one');
 			res.render('index', {
-				success:req.flash('success')
+				title:"Home"
 			});
 		}catch(error){
 
@@ -44,6 +39,7 @@ class UserController{
 			res.status(200).json(error.message);
 		}
 	}
+	
 	/**
 	* register new user
 	*/
@@ -69,6 +65,15 @@ class UserController{
 				});
 			}else{
 
+				// validate email
+				var validateEmail = await callbacks.validateEmail(User, email);
+
+				if(validateEmail.length > 0){
+					return res.render('register', {
+						title: 'Sign-Up',
+						flashErrors: 'Email already exist'
+					});
+				}
 				let newUser = {
 					fullname:name,
 					email:email,
@@ -79,9 +84,8 @@ class UserController{
 				.then(result=>{
 					if(result){
 						req.flash('success', 'You are now registered and can login');
-				 		res.render('login', {
-				 			title:'Sign-In'
-				 		});
+						res.locals.success = req.flash('success');
+				 		res.redirect('/login');
 					}
 				})
 				.catch(err=>{
@@ -112,7 +116,7 @@ class UserController{
 	/**
 	* login user
 	*/
-	static loginUser(req, res){
+	static loginUser(req, res, next){
 		try{
 			// collect process data
 			passport.authenticate('local', {
@@ -122,7 +126,6 @@ class UserController{
 			})(req, res, next);
 
 		}catch(error){
-
 			res.status(200).json(error.message);
 		}
 	}
@@ -134,7 +137,7 @@ class UserController{
 		try{
 			// logout user
 			req.logout();
-			req.flash('success', 'You are logged out');
+			req.flash('success', 'You have logged out successfully');
 			res.redirect('/');
 		}catch(error){
 

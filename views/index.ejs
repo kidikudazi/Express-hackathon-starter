@@ -1,32 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Express Hackathon Starter</title>
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
-	<link rel="stylesheet" type="text/css" href="css/font.css">
-	<script src="js/jquery-1.11.1.min.js"></script>
-	<script src="js/bootstrap.js"></script>
-</head>
-<body>
-	<div class="container-fluid">
-		<!-- <% if ( success.length > 0 ) { %>
-		  <p>Message: <%= success %> </p>
-		<% } %> -->
-		<div class="row">
-			<div class="">
-				<ul class="nav nav-pills pull-right">
-					<li class="active"><a href="/">Home <i class="glyphicon glyphicon-home"></i></a></li>
-					<li><a href="/about">About <i class="glyphicon glyphicon-edit	"></i></a></li>
-					<li><a href="/articles">Articles <i class="glyphicon glyphicon-book"></i></a></li>
-					<li><a href="/login">SignIn <i class="glyphicon glyphicon-log-in"></i></a></li>
-					<li><a href="/register">SignUp <i class="glyphicon glyphicon-log-out"></i></a></li>
-				</ul>
-			</div>
-		</div>
+<%- include('layouts/header'); %>
+
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
+					<%if ( locals.messages ) { %>
+						<div class="alert alert-success">
+						<button type="button" class="close" data-dismiss="alert">
+							&times;
+						</button>
+						<% (messages.split("\n")).forEach(function(msg) { %>
+						     <%- msg %>			        
+				        <% }); %>
+				        </div>
+					<% } %>
 					<div class="jumbotron">
 					    <h1 style="color: grey;font-style: italic;">Express Hackathon Starter</h1>
 					    <p>Let's Get Started......</p>
@@ -35,6 +21,4 @@
 			</div>
 		</div>
 		
-	</div>
-</body>
-</html>
+<%- include('layouts/footer'); %>

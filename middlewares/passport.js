@@ -10,14 +10,12 @@ module.exports = function(passport){
     usernameField: 'email',    // define the parameter in req.body that passport can use as username and password
     passwordField: 'password'
   },function(email, password, done){
-		// Match username
-
-		// let validateUsername = "SELECT * FROM admin WHERE username ='"+username+"'";
+		// Match email
 		User.findAll({
 			where:{
 				email:email
 			}
-		}).then((err, user)=>{
+		}).then((user, err)=>{
 			if(err) throw err;
 			if(!user)
 			{
@@ -25,6 +23,7 @@ module.exports = function(passport){
 			}else{
 				if(user.length == 0)
 				{
+					console.log(err);
 					return done(null, false, {message: 'No user found'});
 				}
 				// match password
@@ -49,8 +48,15 @@ module.exports = function(passport){
 
 	passport.deserializeUser(function(id, done){
 		// let validateId = "SELECT * FROM admin WHERE id = "+id;
-		con.query(validateId, function(err, user){
-			done(err, user[0]);
+		// con.query(validateId, function(err, user){
+		// 	done(err, user[0]);
+		// });
+		User.findAll({
+			where:{
+				id:id
+			}
+		}).then((user, err)=>{
+			done(err, user[0].dataValues);
 		});
 	});
 }
