@@ -23,7 +23,7 @@
   "dependencies": {
     "@kidikudazi/smart-sms": "^1.0.5",
     "@sendgrid/mail": "^7.0.1",
-    "aws-sdk": "^2.814.0",
+    "aws-sdk": "^2.1354.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "connect-flash": "^0.1.1",
